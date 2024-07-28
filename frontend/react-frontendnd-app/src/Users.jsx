@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 function Users() {
     const [data,setData]=useState([]);
-    const getData=()=>{
-      fetch('http://localhost:5001/customers'
+    const getData= async ()=>{
+
+      const response =await fetch('http://localhost:5001/customers'
       ,{
         headers : { 
           'Content-Type': 'application/json',
@@ -10,18 +11,14 @@ function Users() {
          }
       }
       )
-        .then(response =>{
-          console.log(response)
-          return response.json();
-        })
-        .then(myJson=> {
-          console.log(myJson);
-          setData(myJson)
-        });
-    }
+        const data = await response.json();
+        console.log(data)
+         setData(data)
+        };
+
     useEffect(()=>{
       getData()
-    },[])
+    },[]);
     return (
       <div className="App">
        {
@@ -29,6 +26,6 @@ function Users() {
        }
       </div>
     );
-  }
   
+}
   export default Users;
